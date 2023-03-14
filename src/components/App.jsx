@@ -21,26 +21,26 @@ export function App() {
   const [filter, setFilter] = useState('');
 
 
-  const addContactName = ({name, number}) => {
+  const addContactName = ({ name, number }) => {
     const addContact = {
       id: nanoid(),
       name,
       number,
     };
 
-  const upCont = contacts.find(( contact ) => contact.name.toLocaleLowerCase() === name.toLocaleLowerCase());
+    const upCont = contacts.find((contact) => contact.name.toLocaleLowerCase() === name.toLocaleLowerCase());
     if (upCont) {
       return alert(`${name} is already in contacts.`);
     };
 
-  setContacts(prevState => [addContact, ...prevState.contacts]);
+    setContacts(prevState => [addContact, ...prevState]);
+  };
     
   const filterChange = evt => {
     setFilter(evt.target.value );
     };
     
   const filterRender = () => {
-    const { filter, contacts } = useState;
     const normalizedFilter = filter.toLocaleLowerCase();
     return contacts.filter(contact =>
       contact.name.toLocaleLowerCase().includes(normalizedFilter));
@@ -48,7 +48,7 @@ export function App() {
 
     const onDelete = id => {
     setContacts(prevState =>
-    prevState.contacts.filter(contact => contact.id !== id));
+    prevState.filter(contact => contact.id !== id));
   };
 
   const visibleStat = filterRender();
@@ -60,7 +60,6 @@ export function App() {
         <Contact dataContact={visibleStat} onDelete={onDelete} />
       </div>
     )
-  }
    };
 
 // export class App extends Component {
