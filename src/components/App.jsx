@@ -17,28 +17,52 @@ useEffect(() => {
 };
 
 export function App() {
-  const [contacts, setContacts] = useLocalStorage(() => {
-    const getContact = localStorage.getItem('contact');
-        const parseContact = JSON.parse(getContact);
-        if (parseContact !== null) {
-            return parseContact;
-    }
-    return;
-  });
-
+  const [contacts, setContacts] = useLocalStorage('contacts', []);
   const [filter, setFilter] = useState('');
-  
 
-  const visibleStat = this.filterRender();
+
+  const addContactName = ({name, number}) => {
+    const addContact = {
+      id: nanoid(),
+      name,
+      number,
+    };
+
+  const upCont = contacts.find(( contact ) => contact.name.toLocaleLowerCase() === name.toLocaleLowerCase());
+    if (upCont) {
+      return alert(`${name} is already in contacts.`);
+    };
+
+  setContacts(prevState => [addContact, ...prevState.contacts]);
+    
+  const filterChange = evt => {
+    setFilter(evt.target.value );
+    };
+    
+  const filterRender = () => {
+    const { filter, contacts } = useState;
+    const normalizedFilter = filter.toLocaleLowerCase();
+    return contacts.filter(contact =>
+      contact.name.toLocaleLowerCase().includes(normalizedFilter));
+  };
+
+    const onDelete = id => {
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.id !== id)
+    }));
+  };
+
+  const visibleStat = filterRender();
   return (
       <div>
         <h2>Phonebook</h2>
-        <ContactForm addContactName={this.addContactName} />
-        <Filter onChange={this.filterChange} value={filter} />
-        <Contact dataContact={visibleStat} onDelete={this.onDelete} />
+        <ContactForm addContactName={addContactName} />
+        <Filter onChange={filterChange} value={filter} />
+        <Contact dataContact={visibleStat} onDelete={onDelete} />
       </div>
     )
-}
+  }
+   };
 
 // export class App extends Component {
   // state = {
@@ -66,39 +90,39 @@ export function App() {
     //   }
     // }; 
 
-  addContactName = ({name, number}) => {
-    const addContact = {
-      id: nanoid(),
-      name,
-      number,
-    };
+  // addContactName = ({name, number}) => {
+  //   const addContact = {
+  //     id: nanoid(),
+  //     name,
+  //     number,
+  //   };
 
-    const upCont = this.state.contacts.find(( contact ) => contact.name.toLocaleLowerCase() === name.toLocaleLowerCase());
-    if (upCont) {
-      return alert(`${name} is already in contacts.`);
-    };
+    // const upCont = this.state.contacts.find(( contact ) => contact.name.toLocaleLowerCase() === name.toLocaleLowerCase());
+    // if (upCont) {
+    //   return alert(`${name} is already in contacts.`);
+    // };
 
-    this.setState(prevState => ({
-      contacts: [addContact, ...prevState.contacts],
-    }))
-  };
+    // this.setState(prevState => ({
+    //   contacts: [addContact, ...prevState.contacts],
+    // }))
+ 
 
- filterChange = evt => {
-    this.setState({ filter: evt.target.value });
-  };
+//  filterChange = evt => {
+//     this.setState({ filter: evt.target.value });
+//   };
 
-  filterRender = () => {
-    const { filter, contacts } = this.state;
-    const normalizedFilter = filter.toLocaleLowerCase();
-    return contacts.filter(contact =>
-      contact.name.toLocaleLowerCase().includes(normalizedFilter));
-  };
+  // filterRender = () => {
+  //   const { filter, contacts } = this.state;
+  //   const normalizedFilter = filter.toLocaleLowerCase();
+  //   return contacts.filter(contact =>
+  //     contact.name.toLocaleLowerCase().includes(normalizedFilter));
+  // };
 
-  onDelete = id => {
-    this.setState(prevState => ({
-      contacts: prevState.contacts.filter(contact => contact.id !== id)
-    }));
-  };
+  // onDelete = id => {
+  //   this.setState(prevState => ({
+  //     contacts: prevState.contacts.filter(contact => contact.id !== id)
+  //   }));
+  // };
 
   // render() {
   //   const visibleStat = this.filterRender();
