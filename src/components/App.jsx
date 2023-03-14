@@ -1,19 +1,39 @@
-import React, { Component } from "react";
+import { useState, useEffect } from "react";
 import { ContactForm } from "./ContactForm/contactForm";
 import { nanoid } from "nanoid";
 import { Contact } from "./Contacts/contacts";
 import { Filter } from "./Filter/filter";
 
-export class App extends Component {
-  state = {
-    contacts: [
-        {id: 'id-1', name: 'Rosie Simpson', number: '459-12-56'},
-        {id: 'id-2', name: 'Hermione Kline', number: '443-89-12'},
-        {id: 'id-3', name: 'Eden Clements', number: '645-17-79'},
-        {id: 'id-4', name: 'Annie Copeland', number: '227-91-26'},
-        ],
-        filter: '',
-    };
+
+export function App() {
+  const [contacts, setContacts] = useState('');
+  const [filter, setFilter] = useState('');
+
+  useEffect(() => {
+    window.localStorage.setItem('contact', JSON.stringify(contact))
+  }, [contact])
+
+
+  return (
+      <div>
+        <h2>Phonebook</h2>
+        <ContactForm addContactName={this.addContactName} />
+        <Filter onChange={this.filterChange} value={filter} />
+        <Contact dataContact={visibleStat} onDelete={this.onDelete} />
+      </div>
+    )
+}
+
+// export class App extends Component {
+  // state = {
+  //   contacts: [
+  //       {id: 'id-1', name: 'Rosie Simpson', number: '459-12-56'},
+  //       {id: 'id-2', name: 'Hermione Kline', number: '443-89-12'},
+  //       {id: 'id-3', name: 'Eden Clements', number: '645-17-79'},
+  //       {id: 'id-4', name: 'Annie Copeland', number: '227-91-26'},
+  //       ],
+  //       filter: '',
+  //   };
 
     componentDidMount() {
         const getContact = localStorage.getItem('contact');
@@ -64,15 +84,14 @@ export class App extends Component {
     }));
   };
 
-  render() {
-    const visibleStat = this.filterRender();
-    return (
-      <div>
-        <h2>Phonebook</h2>
-        <ContactForm addContactName={this.addContactName} />
-        <Filter onChange={this.filterChange} value={this.state.filter} />
-        <Contact dataContact={visibleStat} onDelete={this.onDelete} />
-      </div>
-    )
-  }
-};
+  // render() {
+  //   const visibleStat = this.filterRender();
+    // return (
+    //   <div>
+    //     <h2>Phonebook</h2>
+    //     <ContactForm addContactName={this.addContactName} />
+    //     <Filter onChange={this.filterChange} value={this.state.filter} />
+    //     <Contact dataContact={visibleStat} onDelete={this.onDelete} />
+    //   </div>
+    // )
+  // }
