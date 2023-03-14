@@ -47,9 +47,8 @@ export function App() {
   };
 
     const onDelete = id => {
-    this.setState(prevState => ({
-      contacts: prevState.contacts.filter(contact => contact.id !== id)
-    }));
+    setContacts(prevState =>
+    prevState.contacts.filter(contact => contact.id !== id));
   };
 
   const visibleStat = filterRender();
