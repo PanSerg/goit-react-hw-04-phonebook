@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-// import { nanoid } from 'nanoid';
 import { StyleForm } from './contactForm.styled';
 import { ButtonsStyle } from 'components/buttonsStyle.styled';
 
@@ -8,12 +7,8 @@ export const ContactForm = ({addContactName}) => {
   const [name, newName] = useState('')
   const [number, newNumber] = useState('')
 
-  // nameInputId = nanoid();
-  // numberInputId = nanoid();
-
   const handleChange = evt => {
     const { value, name } = evt.target;
-    // this.setState({ [name]: value });
     switch (name) {
       case 'name':
         newName(value);
